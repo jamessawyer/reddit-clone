@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: "postgres:latest"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=reddit
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports: 
+      - "5432:5432"
+
+volumes:
+  db:
+    driver: local
