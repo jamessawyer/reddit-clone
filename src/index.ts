@@ -2,6 +2,7 @@ import express from 'express'
 import * as bodyParser from 'body-parser'
 import morgan from 'morgan'
 import { AppDataSource } from './data-source'
+import authRoutes from './routes/auth'
 
 const app = express()
 
@@ -16,6 +17,8 @@ app.use(morgan('dev'))
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+app.use('/api/auth', authRoutes)
 
 app.listen(4000, async () => {
   console.log('server is running on port 4000')
