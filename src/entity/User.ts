@@ -1,16 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  Index,
+  CreateDateColumn,
+} from 'typeorm'
 
 @Entity('users')
-export class User {
+export default class User extends BaseEntity {
+  constructor(user: Partial<User>) {
+    super()
+    Object.assign(this, user)
+  }
+
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
-  firstName: string
+  @Index()
+  @Column({ unique: true })
+  email: string
+
+  @Index()
+  @Column({ unique: true })
+  username: string
 
   @Column()
-  lastName: string
+  password: string
 
-  @Column()
-  age: number
+  @CreateDateColumn()
+  createAt: Date
+
+  @CreateDateColumn()
+  updateAt: Date
 }
