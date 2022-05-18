@@ -4,18 +4,28 @@
   "description": "Awesome project developed with TypeORM.",
   "type": "commonjs",
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/express": "^4.17.13",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.11.10",
     "@typescript-eslint/eslint-plugin": "^5.24.0",
     "@typescript-eslint/parser": "^5.24.0",
     "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-ordered-imports": "^0.6.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
     "ts-node": "10.7.0",
     "typescript": "4.5.2"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "express": "^4.17.2",
     "morgan": "^1.10.0",
     "pg": "^8.4.0",
@@ -26,7 +36,7 @@
     "dev": "nodemon --exec \"pnpm start\"",
     "start": "ts-node src/index.ts",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
-    "lint": "eslint . --ext .{ts,js}",
+    "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --fix"
   }
 }
