@@ -1,8 +1,9 @@
 import express from 'express'
-import * as bodyParser from 'body-parser'
 import morgan from 'morgan'
-import { AppDataSource } from './data-source'
+import * as bodyParser from 'body-parser'
+import trim from './middleware/trim'
 import authRoutes from './routes/auth'
+import AppDataSource from './data-source'
 
 const app = express()
 
@@ -13,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(morgan('dev'))
+
+app.use(trim)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
