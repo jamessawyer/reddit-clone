@@ -1,13 +1,14 @@
-import { Router } from 'express'
-import type { Request, Response } from 'express'
+import { Request, Response, Router } from 'express'
 import { isEmpty, validate, ValidationError } from 'class-validator'
 import bcrypt from 'bcrypt'
 import cookie from 'cookie'
 import jwt from 'jsonwebtoken'
 import AppDataSource from '../data-source'
 import User from '../entity/User'
+import { TypedRequestBody } from '../utlis'
+import auth from '../middleware/auth'
 
-const register = async (req: Request, res: Response) => {
+const register = async (req: TypedRequestBody<User>, res: Response) => {
   const { email, username, password } = req.body
 
   try {
@@ -35,12 +36,11 @@ const register = async (req: Request, res: Response) => {
     // 3. 返回 User
     return res.json(user)
   } catch (error) {
-    console.log(`register err: ${error}`)
     return res.status(500).json(error)
   }
 }
 
-const login = async (req: Request, res: Response) => {
+const login = async (req: TypedRequestBody<User>, res: Response) => {
   const { username, password } = req.body
 
   const errors: { [key: string]: string } = {}
@@ -84,14 +84,30 @@ const login = async (req: Request, res: Response) => {
 
     return res.status(200).json(user)
   } catch (error) {
-    console.log(error)
     return res.status(500).json(error)
   }
+}
+
+const me = async (req: Request, res: Response) => {
+  return res.json(res.locals.user)
+}
+
+const logout = async (_: Request, res: Response) => {
+  res.set(
+    'Set-Cookie',
+    cookie.serialize('token', '', {
+      maxAge: 0,
+      path: '/',
+    })
+  )
+  return res.status(200).json({ message: '退出成功' })
 }
 
 const router = Router()
 
 router.post('/register', register)
 router.post('/login', login)
+router.get('/me', [auth], me)
+router.get('/logout', [auth], logout)
 
 export default router
