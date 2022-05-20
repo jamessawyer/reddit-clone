@@ -1,6 +1,8 @@
 import express from 'express'
 import morgan from 'morgan'
 import * as bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import 'dotenv/config'
 import trim from './middleware/trim'
 import authRoutes from './routes/auth'
 import AppDataSource from './data-source'
@@ -14,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(morgan('dev'))
+// cookie-parser 用于解析 Cookie Header 并生成 req.cookies 对象
+app.use(cookieParser())
 
 app.use(trim)
 
@@ -23,7 +27,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes)
 
-app.listen(4000, async () => {
+app.listen(process.env.PORT, async () => {
   console.log('server is running on port 4000')
 
   try {
