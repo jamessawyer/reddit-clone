@@ -4,7 +4,7 @@
   "description": "reddit clone with next.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "nodemon -w src -x \"pnpm start\"",
+    "dev": "nodemon -w \"src/**\" --ext \".ts,.js,.json\" -x \"ts-node src/index.ts\"",
     "start": "ts-node src/index.ts",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "lint": "eslint . --ext .ts,.js",
