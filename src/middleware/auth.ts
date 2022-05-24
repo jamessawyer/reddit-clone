@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import AppDataSource from '../data-source'
 import User from '../entity/User'
 
@@ -11,7 +11,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       throw new Error(MSG)
     }
 
-    const { username }: any = jwt.verify(token, process.env.JWT_SECRET)
+    const { username } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload
 
     const user = await AppDataSource.manager.findOneBy(User, { username })
 
