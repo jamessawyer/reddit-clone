@@ -1,26 +1,15 @@
 import { IsEmail, Length } from 'class-validator'
-import {
-  BaseEntity,
-  BeforeInsert,
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  PrimaryGeneratedColumn,
-} from 'typeorm'
+import { BeforeInsert, Column, Entity, Index } from 'typeorm'
 import * as bcrypt from 'bcrypt'
-import { Exclude, instanceToPlain } from 'class-transformer'
+import { Exclude } from 'class-transformer'
+import CommonEntity from './CommonEntity'
 
 @Entity('users')
-export default class User extends BaseEntity {
+export default class User extends CommonEntity {
   constructor(user: Partial<User>) {
     super()
     Object.assign(this, user)
   }
-
-  @Exclude()
-  @PrimaryGeneratedColumn()
-  id: number
 
   @Index()
   @IsEmail({}, { message: '邮箱格式不正确' })
@@ -37,18 +26,8 @@ export default class User extends BaseEntity {
   @Column()
   password: string
 
-  @CreateDateColumn()
-  createAt: Date
-
-  @CreateDateColumn()
-  updateAt: Date
-
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 6)
-  }
-
-  toJSON() {
-    return instanceToPlain(this)
   }
 }
