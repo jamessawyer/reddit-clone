@@ -1,4 +1,5 @@
 const OFF = 0
+const WARN = 1
 const ERROR = 2
 
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'no-console': process.env.NODE_ENV === 'production' ? WARN : OFF,
   },
   settings: {
     'import/resolver': {
