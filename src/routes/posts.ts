@@ -1,12 +1,14 @@
 import { Response, Router } from 'express'
 import { TypedRequestBody } from '../utlis/types'
+import AppDataSource from '../data-source'
 import Post from '../entity/Post'
 import auth from '../middleware/auth'
+import Sub from '../entity/Sub'
 
 type PostRequest = {
-  title: string
-  body: string
-  sub: string
+  title: string // 标题
+  body: string // 内容
+  sub: string // 频道名
 }
 
 // 创建Post
@@ -20,10 +22,15 @@ const createPost = async (req: TypedRequestBody<PostRequest>, res: Response) => 
   }
 
   try {
+    // find sub
+    const subRecord = await AppDataSource.manager.findOneOrFail(Sub, {
+      where: { name: sub },
+    })
+
     const post = new Post({
       title,
       body,
-      subName: sub,
+      sub: subRecord,
       user,
     })
 
