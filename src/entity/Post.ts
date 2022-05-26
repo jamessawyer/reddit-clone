@@ -1,6 +1,7 @@
 import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 import { makeId, slugify } from '../utlis/helpers'
 import CommonEntity from './CommonEntity'
+import Sub from './Sub'
 import User from './User'
 
 @Entity('posts')
@@ -35,6 +36,10 @@ export default class Post extends CommonEntity {
   // referencedColumnName: 引用此列的实体中的列的名称
   @JoinColumn({ name: 'username', referencedColumnName: 'username' })
   user: User
+
+  @ManyToOne((_type) => Sub, (sub) => sub.posts)
+  @JoinColumn({ name: 'subName', referencedColumnName: 'name' })
+  sub: Sub
 
   @BeforeInsert()
   makeIdAndSlug() {
