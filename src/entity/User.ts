@@ -3,7 +3,7 @@ import { BeforeInsert, Column, Entity, Index, OneToMany } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import { Exclude } from 'class-transformer'
 import CommonEntity from './CommonEntity'
-import type Post from './Post'
+import Post from './Post'
 
 @Entity('users')
 export default class User extends CommonEntity {
@@ -29,8 +29,8 @@ export default class User extends CommonEntity {
 
   // 为了避免eslint循环依赖的问题 import/no-cycle 错误
   // https://stackoverflow.com/a/65124006/7185283
-  // @OneToMany((_type) => Post, (post) => post.user)
-  @OneToMany('Post', 'user')
+  @OneToMany((_type) => Post, (post) => post.user)
+  // @OneToMany('Post', 'user')
   posts: Post[]
 
   @BeforeInsert()
