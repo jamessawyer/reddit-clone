@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import 'dotenv/config'
 import trim from './middleware/trim'
 import authRoutes from './routes/auth'
+import postRoutes from './routes/posts'
 import AppDataSource from './data-source'
 
 const app = express()
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/posts', postRoutes)
 
 app.listen(process.env.PORT, async () => {
   console.log('server is running on port 4000')
