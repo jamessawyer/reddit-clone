@@ -5,7 +5,7 @@ import cookie from 'cookie'
 import jwt from 'jsonwebtoken'
 import AppDataSource from '../data-source'
 import User from '../entity/User'
-import { TypedRequestBody } from '../utlis'
+import { TypedRequestBody } from '../utlis/types'
 import auth from '../middleware/auth'
 
 const register = async (req: TypedRequestBody<User>, res: Response) => {
