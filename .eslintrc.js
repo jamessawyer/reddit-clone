@@ -38,7 +38,12 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'import/prefer-default-export': OFF,
     'no-console': process.env.NODE_ENV === 'production' ? WARN : OFF,
+    // https://github.com/typescript-eslint/typescript-eslint/issues/557#issuecomment-505652331
+    // 避免 OneToMany type 产生警告信息
+    '@typescript-eslint/no-unused-vars': [WARN, { argsIgnorePattern: '^_' }],
+    'no-plusplus': OFF,
   },
   settings: {
     'import/resolver': {
